@@ -1,15 +1,20 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
 public class Gui extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Создание формы / панели, создание кнопки
@@ -21,49 +26,30 @@ public class Gui extends Application {
         root.setPrefSize(400, 500);
         root.setPadding(new Insets(10, 10, 10, 10));
 
-        Label inHours = addLabel(" :hours");
-        inHours.setTranslateX(170);
-        inHours.setTranslateY(140);
+        Label inHours = addLabel(" :hours", 170, 140);
 
-        Label hoursLabel = addLabel("--"); // Числовые значения часа
-        hoursLabel.setTranslateX(90);
-        hoursLabel.setTranslateY(140);
+        Label hoursLabel = addLabel("--", 90, 140); // Числовые значения часа
         hoursLabel.setId("hoursLabel");
 
-        Label inDays = addLabel(" :days");
-        inDays.setTranslateX(170);
-        inDays.setTranslateY(160);
+        Label inDays = addLabel(" :days", 170, 160);
 
-        Label daysLabel = addLabel("--"); // Числовые значения дней
-        daysLabel.setTranslateX(90);
-        daysLabel.setTranslateY(160);
+        Label daysLabel = addLabel("--", 90, 160); // Числовые значения дней
         daysLabel.setId("daysLabel");
 
-        Label inMonths = addLabel(" :months");
-        inMonths.setTranslateX(170);
-        inMonths.setTranslateY(180);
+        Label inMonths = addLabel(" :months", 170, 180);
 
-        Label monthsLabel = addLabel("--"); // Числовые значения месяцев
-        monthsLabel.setTranslateX(90);
-        monthsLabel.setTranslateY(180);
+        Label monthsLabel = addLabel("--", 90, 180); // Числовые значения месяцев
         monthsLabel.setId("monthsLabel");
 
-        Label inYears = addLabel(" :years");
-        inYears.setTranslateX(170);
-        inYears.setTranslateY(200);
+        Label inYears = addLabel(" :years", 170, 200);
 
-        Label yearsLabel = addLabel("--"); // Числовые значения лет
-        yearsLabel.setTranslateX(90);
-        yearsLabel.setTranslateY(200);
+        Label yearsLabel = addLabel("--", 90, 200); // Числовые значения лет
         yearsLabel.setId("yearsLabel");
 
         Tooltip errorText = new Tooltip("Please! Enter a numeric value"); // Error text message
         errorText.setId("errorText");
 
-        Label vers = addLabel("version 0.2.6");
-        vers.setTranslateX(400);
-        vers.setTranslateY(330);
-        vers.setPrefSize(60, 15);
+        Label vers = addLabel("version 0.2.6", 400, 330);
         vers.setId("versLabel");
 
         TextField inputed = new LimitedTextField(18); // Поле для ввода числовых значений
@@ -90,10 +76,8 @@ public class Gui extends Application {
             }
         });
 
-        Button btn = addButton("CLEAR IT!"); // Создаем новый объект кнопки
-        btn.setTranslateX(350); // Задаем координаты по X
-        btn.setTranslateY(101); // Задаем координаты по Y
-        btn.setOnAction(event -> {
+        Button btn = addButton("CLEAR!", 350, 101); // Создаем новый объект кнопки
+        btn.setOnAction((ActionEvent event) -> {
             inputed.clear();
             hoursLabel.setText("--");
             daysLabel.setText("--");
@@ -112,19 +96,37 @@ public class Gui extends Application {
         primaryStage.show(); // Показать всё
     }
 
-    // Create a button
-    private Button addButton(String name) {
+    /**
+     * Create a button
+     *
+     * @param name
+     * @return
+     */
+    private Button addButton(String name, int x, int y) {
         Button btn = new Button(name);
         btn.setPrefSize(100, 20);
+        btn.setTranslateX(x);
+        btn.setTranslateY(y);
         return btn;
     }
 
-    private Label addLabel(String name) {
+    /**
+     * Create a label
+     *
+     * @param name
+     * @return
+     */
+    private Label addLabel(String name, int x, int y) {
         Label label = new Label(name);
         label.setPrefSize(180, 50);
+        label.setTranslateX(x);
+        label.setTranslateY(y);
         return label;
     }
 
+    /**
+     * Limited text field class
+     */
     class LimitedTextField extends TextField {
         private final int limit;
 
@@ -150,10 +152,6 @@ public class Gui extends Application {
             }
 
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 
