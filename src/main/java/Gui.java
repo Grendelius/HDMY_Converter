@@ -17,46 +17,42 @@ public class Gui extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Создание формы / панели, создание кнопки
-        primaryStage.setTitle("HDMY Converter(R) by Andrei Tolkachev"); //Заголовок окна
-        primaryStage.setWidth(500); // Ширина окна
-        primaryStage.setHeight(400); // Высота окна
+        primaryStage = Element.createStage(500, 400);
+        primaryStage.setTitle("HDMY Converter(R) by Andrei Tolkachev");
+        Pane root = Element.createPane(400,500);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Gui.class.getResource("Login.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-        Pane root = new Pane(); // Создаем новый объект панели
-        root.setPrefSize(400, 500);
-        root.setPadding(new Insets(10, 10, 10, 10));
+        Label inHours = Element.addLabel(" :hours", 170, 140);
 
-        Label inHours = addLabel(" :hours", 170, 140);
-
-        Label hoursLabel = addLabel("--", 90, 140); // Числовые значения часа
+        Label hoursLabel = Element.addLabel("--", 90, 140);
         hoursLabel.setId("hoursLabel");
 
-        Label inDays = addLabel(" :days", 170, 160);
+        Label inDays = Element.addLabel(" :days", 170, 160);
 
-        Label daysLabel = addLabel("--", 90, 160); // Числовые значения дней
+        Label daysLabel = Element.addLabel("--", 90, 160);
         daysLabel.setId("daysLabel");
 
-        Label inMonths = addLabel(" :months", 170, 180);
+        Label inMonths = Element.addLabel(" :months", 170, 180);
 
-        Label monthsLabel = addLabel("--", 90, 180); // Числовые значения месяцев
+        Label monthsLabel = Element.addLabel("--", 90, 180);
         monthsLabel.setId("monthsLabel");
 
-        Label inYears = addLabel(" :years", 170, 200);
+        Label inYears = Element.addLabel(" :years", 170, 200);
 
-        Label yearsLabel = addLabel("--", 90, 200); // Числовые значения лет
+        Label yearsLabel = Element.addLabel("--", 90, 200);
         yearsLabel.setId("yearsLabel");
 
-        Tooltip errorText = new Tooltip("Please! Enter a numeric value"); // Error text message
+        Tooltip errorText = new Tooltip("Please! Enter a numeric value");
         errorText.setId("errorText");
 
-        Label vers = addLabel("version 0.2.6", 400, 330);
+        Label vers = Element.addLabel("version 0.2.6", 400, 330);
         vers.setId("versLabel");
 
-        TextField inputed = new LimitedTextField(18); // Поле для ввода числовых значений
+        TextField inputed = new Element.LimitedTextField(18, 90, 100, 250);
         inputed.setPromptText("enter a number of minutes");
-        inputed.setPrefWidth(250);
-        inputed.setTranslateX(90);
-        inputed.setTranslateY(100);
         inputed.setOnKeyReleased(event -> {
             try {
                 Converter.inputString(inputed);
@@ -76,7 +72,7 @@ public class Gui extends Application {
             }
         });
 
-        Button btn = addButton("CLEAR!", 350, 101); // Создаем новый объект кнопки
+        Button btn = Element.addButton("CLEAR!", 350, 101);
         btn.setOnAction((ActionEvent event) -> {
             inputed.clear();
             hoursLabel.setText("--");
@@ -85,73 +81,9 @@ public class Gui extends Application {
             yearsLabel.setText("--");
         });
 
-        root.getChildren()
-                .addAll(btn, inputed, inHours, hoursLabel, inDays, daysLabel, inMonths, monthsLabel, inYears, yearsLabel, vers);
+        root.getChildren().addAll(btn, inputed, inHours, hoursLabel, inDays, daysLabel, inMonths,
+                monthsLabel, inYears, yearsLabel, vers);
         root.setOnMouseClicked(event -> inputed.setPromptText("click on this text field"));
-
-        Scene scene = new Scene(root); // Создаем объект сцены(действий на граф. объекте)
-        primaryStage.setScene(scene); // устанавливаем в головоной контейнер интерфейса scene
-        scene.getStylesheets().add(Gui.class.getResource("Login.css").toExternalForm());
-
-        primaryStage.show(); // Показать всё
-    }
-
-    /**
-     * Create a button
-     *
-     * @param name
-     * @return
-     */
-    private Button addButton(String name, int x, int y) {
-        Button btn = new Button(name);
-        btn.setPrefSize(100, 20);
-        btn.setTranslateX(x);
-        btn.setTranslateY(y);
-        return btn;
-    }
-
-    /**
-     * Create a label
-     *
-     * @param name
-     * @return
-     */
-    private Label addLabel(String name, int x, int y) {
-        Label label = new Label(name);
-        label.setPrefSize(180, 50);
-        label.setTranslateX(x);
-        label.setTranslateY(y);
-        return label;
-    }
-
-    /**
-     * Limited text field class
-     */
-    class LimitedTextField extends TextField {
-        private final int limit;
-
-        LimitedTextField(int limit) {
-            this.limit = limit;
-        }
-
-        @Override
-        public void replaceText(int start, int end, String text) {
-            super.replaceText(start, end, text);
-            verify();
-        }
-
-        @Override
-        public void replaceSelection(String text) {
-            super.replaceSelection(text);
-            verify();
-        }
-
-        private void verify() {
-            if (getText().length() > limit) {
-                setText(getText().substring(0, limit));
-            }
-
-        }
     }
 }
 
