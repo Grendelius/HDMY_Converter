@@ -19,11 +19,11 @@ public class Gui extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage = Element.createStage(500, 400);
         primaryStage.setTitle("HDMY Converter(R) by Andrei Tolkachev");
+
         Pane root = Element.createPane(400,500);
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Gui.class.getResource("Login.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         Label inHours = Element.addLabel(" :hours", 170, 140);
 
@@ -84,6 +84,9 @@ public class Gui extends Application {
         root.getChildren().addAll(btn, inputed, inHours, hoursLabel, inDays, daysLabel, inMonths,
                 monthsLabel, inYears, yearsLabel, vers);
         root.setOnMouseClicked(event -> inputed.setPromptText("click on this text field"));
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
 
