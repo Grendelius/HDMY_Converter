@@ -1,8 +1,10 @@
-import junit.framework.TestCase;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-public class ConverterTest extends TestCase {
-    Converter converter;
+import static org.junit.Assert.assertEquals;
+
+public class ConverterTest {
 
     @BeforeClass
     public static void beforeClass() {
@@ -19,40 +21,38 @@ public class ConverterTest extends TestCase {
         Converter.setNum(60);
         String result = Converter.toHours();
         assertEquals("1,0", result);
-
     }
 
     @Test
     public void testToDays() throws Exception {
         Converter.setNum(1440);
-        String result = Converter.toDays();
-        assertEquals("1,0", result);
+        assertEquals("1,0", Converter.toDays());
     }
 
     @Test
     public void testToMonths() throws Exception {
         Converter.setNum(43200);
-        String result = Converter.toMonths();
-        assertEquals("1,0", result);
+        assertEquals("1,0", Converter.toMonths());
     }
 
     @Test
     public void testToYears() throws Exception {
         Converter.setNum(518400);
-        String result = Converter.toYears();
-        assertEquals("1,0", result);
+        assertEquals("1,0", Converter.toYears());
     }
 
-    @Test(expected = ArithmeticException.class)
+    @Test(expected = NumberFormatException.class)
     public void testToException() {
-        Converter.setNum(0);
+        Converter.setNum(Long.parseLong(null));
+        Converter.toHours();
+        Converter.setNum(Long.parseLong("string"));
         Converter.toHours();
     }
 
-    @Test(timeout = 500)
-    public void timeStapTest() {
-        while (true);
+    @Test
+    public void testInfinityString() {
+        Converter.setNum(Long.MAX_VALUE);
+        assertEquals("infinity", Converter.toHours());
     }
-
 
 }

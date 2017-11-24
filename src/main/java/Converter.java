@@ -16,6 +16,10 @@ class Converter {
         Converter.num = num;
     }
 
+    public static long getNum() {
+        return num;
+    }
+
     /**
      * Numbers inputs
      * @param field
