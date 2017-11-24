@@ -12,6 +12,10 @@ class Converter {
     private static final String FORMATTED_DOUBLE = "#0.0";
     private static long num;
 
+    static void setNum(long num) {
+        Converter.num = num;
+    }
+
     /**
      * Numbers inputs
      * @param field
